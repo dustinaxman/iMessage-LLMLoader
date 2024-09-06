@@ -126,7 +126,11 @@ def get_llm_prompt(question, start_date, end_date):
 
 
 def get_filtered_imessages(start_date, end_date):
-    conn = sqlite3.connect('/Users/deaxman/Downloads/imessage_data.db')
+    home_directory = os.path.expanduser("~")
+    db_path = os.path.join(home_directory, "Downloads", "imessage_data.db")
+    vcf_path = os.path.join(home_directory, "Downloads", "all_contacts_9_6_24.vcf")
+
+    conn = sqlite3.connect(db_path)
     cur = conn.cursor()
     cur.execute(" select name from sqlite_master where type = 'table' ")
     #messages = pd.read_sql_query('''select *, datetime(date/1000000000 + strftime("%s", "2001-01-01") ,"unixepoch","localtime")  as date_utc from message''', conn) 
@@ -160,7 +164,6 @@ def get_filtered_imessages(start_date, end_date):
     df_messages_filtered = df_messages[df_messages['text'].str.strip().astype(bool)]
     df_messages_filtered = df_messages_filtered.reset_index(drop=True)
 
-    vcf_path = "/Users/deaxman/Downloads/all_contacts_9_6_24.vcf"
     #all_contacts.vcf
     contacts_df = vcf_to_dataframe(vcf_path)
 
