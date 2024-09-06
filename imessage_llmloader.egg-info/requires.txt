@@ -1,0 +1,7 @@
+vobject
+pandas
+matplotlib
+google-generativeai
+rich
+argparse
+tiktoken
